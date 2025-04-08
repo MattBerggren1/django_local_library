@@ -17,9 +17,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from catalog.api import api
+from django.urls import include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", api.urls),
+    path('admin/', admin.site.urls),
+    path('catalog/', include('catalog.urls')),
 ]
 
 # Use include() to add paths from the catalog application
@@ -42,3 +47,8 @@ urlpatterns += [
     path('', RedirectView.as_view(url='catalog/', permanent=True)),
 ]
 
+# Add Django site authentication urls (for login, logout, password management)
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
